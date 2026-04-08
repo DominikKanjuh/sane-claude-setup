@@ -1,0 +1,33 @@
+{
+  "name": "sane-claude-setup",
+  "owner": {
+    "name": "Dominik Kanjuh"
+  },
+  "metadata": {
+    "description": "Opinionated, privacy-first Claude Code defaults: read-only floor plus per-repo opt-in for autonomous work, with deterministic PreToolUse guardrails.",
+    "version": "0.1.1"
+  },
+  "plugins": [
+    {
+      "name": "sane-claude-setup",
+      "source": "./plugins/sane-claude-setup",
+      "description": "Ships /sane-global, /sane-repo, and six always-on PreToolUse hooks (shell-exec escapes, destructive git, curl|sh, rm -rf catastrophic, sudo, gh api writes).",
+      "version": "0.1.1",
+      "author": {
+        "name": "Dominik Kanjuh"
+      },
+      "homepage": "https://github.com/DominikKanjuh/sane-claude-setup",
+      "repository": "https://github.com/DominikKanjuh/sane-claude-setup",
+      "license": "MIT",
+      "category": "security",
+      "tags": [
+        "permissions",
+        "security",
+        "sandbox",
+        "hooks",
+        "sane-defaults",
+        "privacy"
+      ]
+    }
+  ]
+}

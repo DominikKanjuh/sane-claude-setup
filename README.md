@@ -21,22 +21,25 @@ Three layers of defense, in order:
 ## Install
 
 ```bash
-# Add the marketplace (one time)
+# Add the marketplace (one time, inside a Claude Code session)
 /plugin marketplace add DominikKanjuh/sane-claude-setup
 
-# Install the plugin
-/plugin install sane-claude-setup
+# Install the plugin from it
+/plugin install sane-claude-setup@sane-claude-setup
 ```
 
-Or clone and install from disk:
+Or clone and install from disk for local development:
 
 ```bash
 git clone https://github.com/DominikKanjuh/sane-claude-setup.git
+# then, inside a Claude Code session:
 /plugin marketplace add ./sane-claude-setup
-/plugin install sane-claude-setup
+/plugin install sane-claude-setup@sane-claude-setup
 ```
 
 Once installed, the hooks are **already active**. Restart your Claude session if needed.
+
+> **Caveats worth reading before you ship.** This is v0.1 and genuinely untested at runtime. Known gaps: `node --eval` and `deno eval` slip the shell-exec hook; `rm -rf ~/Desktop` slips the catastrophic-rm hook; `cp leaked.env .env` bypasses the `.env` write deny under `/sane-repo`; hook regexes false-positive on git commit messages containing the blocked patterns (you'll see a block when committing "fix the python -c crash"); the permission allowlist matcher semantics are assumed to be prefix-based and unverified. This plugin defends against **Claude-specific** failure modes (prompt injection, runaway autonomy) — it is **not** a sandbox against a compromised host. Treat it as a sane starting baseline, not a finished security product.
 
 ## Use
 
