@@ -1,0 +1,35 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "CMD=$(jq -r '.tool_input.command'); if echo \"$CMD\" | grep -qE '(^|[[:space:]/])(python[0-9.]*|node|deno|bun|perl|ruby|lua|bash|sh|zsh|ksh|dash)[[:space:]]+-[^[:space:]]*[ceE]([[:space:]]|$)' || echo \"$CMD\" | grep -qE '(^|[[:space:];&|])eval[[:space:]]'; then printf '%s\\n' '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"sane-claude-setup: Code-exec flags (python -c, node -e, bash -c, eval, etc.) bypass the permission allowlist. Write the code to a file and execute that file instead.\"}}'; fi"
+          },
+          {
+            "type": "command",
+            "command": "CMD=$(jq -r '.tool_input.command'); if echo \"$CMD\" | grep -qE '(^|[[:space:];&|])git[[:space:]]+(push([[:space:]]|$)|reset[[:space:]]+.*--hard|clean[[:space:]]+-[a-z]*[fF])'; then printf '%s\\n' '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"sane-claude-setup: Destructive git operations (push, reset --hard, clean -fd) are blocked. Run them manually in your terminal if you really mean it.\"}}'; fi"
+          },
+          {
+            "type": "command",
+            "command": "CMD=$(jq -r '.tool_input.command'); if echo \"$CMD\" | grep -qE '(curl|wget)[[:space:]].*\\|[[:space:]]*(sh|bash|zsh|ksh|dash)([[:space:]]|$)'; then printf '%s\\n' '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"sane-claude-setup: curl|sh / wget|sh is a supply-chain attack vector. Download to a file, inspect it, then run.\"}}'; fi"
+          },
+          {
+            "type": "command",
+            "command": "CMD=$(jq -r '.tool_input.command'); if echo \"$CMD\" | grep -qiE '(^|[[:space:];&|])rm[[:space:]]+(-[a-zA-Z]*[rR][a-zA-Z]*[fF][a-zA-Z]*|-[a-zA-Z]*[fF][a-zA-Z]*[rR][a-zA-Z]*|--recursive[[:space:]]+--force|--force[[:space:]]+--recursive)[[:space:]]+(/|~|\\*|/\\*|~/|\\$HOME|\\$\\{HOME\\})([[:space:]]|$|;|&|/$)'; then printf '%s\\n' '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"sane-claude-setup: rm -rf targeting /, ~, *, or $HOME is catastrophic. Name a specific subdirectory instead.\"}}'; fi"
+          },
+          {
+            "type": "command",
+            "command": "CMD=$(jq -r '.tool_input.command'); if echo \"$CMD\" | grep -qiE '(^|[[:space:];&|])sudo([[:space:]]|$)'; then printf '%s\\n' '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"sane-claude-setup: sudo is blocked. Claude should never need root.\"}}'; fi"
+          },
+          {
+            "type": "command",
+            "command": "CMD=$(jq -r '.tool_input.command'); if echo \"$CMD\" | grep -qiE '^[[:space:]]*gh[[:space:]]+api.*(-X[[:space:]]+(POST|PUT|DELETE|PATCH)|--method[[:space:]]+(POST|PUT|DELETE|PATCH))'; then printf '%s\\n' '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"sane-claude-setup: gh api write operations (POST/PUT/DELETE/PATCH) are blocked. Use gh pr create / gh issue create, or run the write manually.\"}}'; fi"
+          }
+        ]
+      }
+    ]
+  }
+}

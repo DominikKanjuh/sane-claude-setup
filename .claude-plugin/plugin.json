@@ -1,0 +1,19 @@
+{
+  "name": "sane-claude-setup",
+  "description": "Opinionated, privacy-first Claude Code setup. Ships /sane-global (read-only floor for every session) and /sane-repo (opens the current repo for autonomous work) plus deterministic PreToolUse guardrails.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Dominik Kanjuh"
+  },
+  "homepage": "https://github.com/DominikKanjuh/sane-claude-setup",
+  "repository": "https://github.com/DominikKanjuh/sane-claude-setup",
+  "license": "MIT",
+  "keywords": [
+    "claude-code",
+    "permissions",
+    "security",
+    "sandbox",
+    "hooks",
+    "sane-defaults"
+  ]
+}
