@@ -65,7 +65,7 @@ Once installed, the hooks are **already active**. Restart your Claude session if
 
 ## What's allowed after `/sane-global`
 
-Read-only everything: `Read`/`Glob`/`Grep`, `WebSearch`/`WebFetch`, `git status|log|diff|branch|show|rev-parse`, `gh pr|issue|repo|run view/list/diff/checks`, `ls|pwd|which|file|date|uname|whoami|env`, `gh api repos/...` (read).
+Read-only everything: `Read`/`Glob`/`Grep`, `WebSearch`/`WebFetch`, `mcp__context7__*` (free, read-only docs fetcher — install [context7](https://github.com/upstash/context7) separately if you want it), `git status|log|diff|show|rev-parse|branch` (destructive `git branch -d/-D/-m/-M/-c/-C` explicitly denied), `gh pr|issue|repo|run view/list/diff/checks`, `ls|pwd|which|file|tree|date|uname|whoami`, `gh api repos/...` (read).
 
 ## What's additionally allowed after `/sane-repo`
 

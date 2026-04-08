@@ -1,7 +1,7 @@
 {
   "name": "sane-claude-setup",
   "description": "Opinionated, privacy-first Claude Code setup. Ships /sane-global (read-only floor for every session) and /sane-repo (opens the current repo for autonomous work) plus deterministic PreToolUse guardrails.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": {
     "name": "Dominik Kanjuh"
   },
